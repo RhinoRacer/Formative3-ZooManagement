@@ -7,4 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Windows.Extensions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Music\" />
+    <Folder Include="Save_Files\" />
+    <Folder Include="Sounds\" />
+  </ItemGroup>
+
 </Project>

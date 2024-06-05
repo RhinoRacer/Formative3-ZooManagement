@@ -7,26 +7,49 @@ class Program
 { // ============================================= Main Method =============================================
     public static void Main(string[] args)
     {
-        Console.ForegroundColor = ConsoleColor.Gray;
         // Create a collection of animals at start of application
         List<Animal> animals = new List<Animal>();
+        //Start Background Music
+        Extras.Play_BG();
+        Console.WriteLine("Welcome to Virtual Zoo Management!\n" +
+            "1. Start new Game\n" +
+            "2. Load Save\n");
+        string choice = Console.ReadLine();
+        if (choice == "1")
+        {
+            Mechanics.Create_Save(animals);
+        } 
+        else if (choice == "2")
+        {
+
+        }
+        else
+        {
+            Console.WriteLine(ErrorList.Error6());
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Main(args);
+        }
+        Console.ForegroundColor = ConsoleColor.Gray;
         // Go to Main Menu
         Play(animals);
-
     }
     // ============================================= Play Method =============================================
     //use another method to use the animals, to avoid recreating them over and over again.
     public static void Play(List<Animal> animals)
     {
         Console.ForegroundColor = ConsoleColor.Gray;// Ensure Gray colour
-        Console.WriteLine("-<========>- Welcome to ~Rhino's Virtual Zoo~! -<========>-");
+        Console.WriteLine($"-<========>- Welcome to ~'s Virtual Zoo~! -<========>-");
         Console.WriteLine("Please enter the number of your choice \n" +
             " 1. Add a new animal\n" +
             " 2. Remove an animal\n" +
             " 3. Use an animal\n" +
             " 4. Display all animals\n" +
             " 5. Display Zoo Map\n" +
-            " 99. Quit\n" +
+            " 6. Check Stats\n" +
+            " 7. Shop\n" +
+            " \n" +
+            " 88. Game Options\n" +
+            " 99. Quit Game\n" +
             " Enter your choice: ");
         Console.ForegroundColor = ConsoleColor.Blue;
         string choice = Console.ReadLine();
@@ -183,10 +206,26 @@ class Program
             // get Map of current animal positions
             Map.getMap(animals);
             Play(animals); // go back to play
+        }// --------------------------------------- Check Stats ---------------------------------------
+        else if (choice == "6")
+        {
+            Mechanics.Check_Stats();
+            Play(animals);
+        }// --------------------------------------- Access Game Shop ---------------------------------------
+        else if (choice == "7")
+        {
+            Shop.Access();
+            Play(animals);
+        }// --------------------------------------- Options ---------------------------------------
+        else if (choice == "88")
+        {
+            Mechanics.Options();
+            Play(animals);
         }
         // --------------------------------------- Quit program ---------------------------------------
         else if (choice == "99")
         {
+            Extras.Stop_BG();
             Environment.Exit(0);
         } // --------------------------------------- if choice input not valid ---------------------------------------
         else if (Check_Choice(choice) == false)
