@@ -42,14 +42,14 @@ class Mechanics
         try
         {
             // create the variables for player object
-            string Name;
-            double cash;
-            double bank;
-            string[] inventory;
-            string[] storage;
-            int AttractionPoints;
-            int customers;
-            int HappinessLevel;
+            string? Name;
+            double? cash;
+            double? bank;
+            string[]? inventory;
+            string[]? storage;
+            int? AttractionPoints;
+            int? customers;
+            int? HappinessLevel;
             //prompt user for Zoo Name
             Console.WriteLine("What will be the name of your Zoo?");
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -78,6 +78,7 @@ class Mechanics
                 using (StreamWriter streamWriter = new StreamWriter(filePath))
                 {
                     streamWriter.Write(Save_Info);
+                    streamWriter.Close();
                 }
                 
                 Console.WriteLine($"Save file created at: {Path.GetFullPath(filePath)}");
@@ -148,7 +149,28 @@ class Mechanics
     {
         try
         {
+            string? Name = player.Name;
+            double? cash = player.Cash;
+            double? bank = player.Bank;
+            string[]? inventory = player.Inventory;
+            string[]? storage = player.Storage;
+            int? AttractionPoints = player.AP;
+            int? customers = player.Customers;
+            int? HappinessLevel = player.HL;
+            // create the player object/zoo object
+            Zoo Player = new Zoo(Name, cash, bank, inventory, storage, AttractionPoints, customers, HappinessLevel, animals);
 
+            string Save_Info = JsonSerializer.Serialize(Player, new JsonSerializerOptions { WriteIndented = true });
+
+            // Write the JSON string to a file
+            string filePath = $@"..\..\..\Save_Files\ZMS_{Name}_saveFile.json";
+
+            using (StreamWriter streamWriter = new StreamWriter(filePath))
+            {
+                streamWriter.Write(Save_Info);
+                streamWriter.Close();
+            }
+            Console.WriteLine($"Game file saved at: {Path.GetFullPath(filePath)}");
         }
         catch (FormatException e)
         {

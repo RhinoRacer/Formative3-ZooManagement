@@ -234,6 +234,7 @@ class Program
         // --------------------------------------- Quit program ---------------------------------------
         else if (choice == "99")
         {
+            Mechanics.Save_Game(player, animals);
             Extras.Stop_BG();
             Environment.Exit(0);
         } // --------------------------------------- if choice input not valid ---------------------------------------
