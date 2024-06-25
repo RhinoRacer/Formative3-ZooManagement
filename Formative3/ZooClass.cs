@@ -15,8 +15,8 @@ public class Zoo
     public int? AP { get; set; }
     public int? Customers { get; set; }
     public int? HL { get; set; }
-    public List<Animal> Animals { get; set; }
-    public Zoo(string Name, double Cash, double Bank, string[] Inventory, int AP, int Customers, string[] Storage, int HL, List<Animal> Animals)
+    public List<Animal>? Animals { get; set; }
+    public Zoo(string? Name, double? Cash, double? Bank, string[]? Inventory, int? AP, int? Customers, string[]? Storage, int? HL, List<Animal>? Animals)
     {
         this.Name = Name; // Name of zoo
         this.Cash = Cash; // Amount of useable cash
@@ -30,7 +30,7 @@ public class Zoo
     }
 
     [JsonConstructor]
-    public Zoo(string Name, double Cash, double Bank, string[] Inventory, string[] Storage, int AP, int Customers, int HL, List<Animal> Animals)
+    public Zoo(string? Name, double? Cash, double? Bank, string[]? Inventory, string[]? Storage, int? AP, int? Customers, int? HL, List<Animal>? Animals)
     {
         this.Name = Name; // Name of zoo
         this.Cash = Cash; // Amount of useable cash

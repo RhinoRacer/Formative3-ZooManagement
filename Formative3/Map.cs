@@ -1,8 +1,10 @@
 ﻿// Represents a map where animals are placed on a grid
+using System.Numerics;
+
 class Map
 {
     // Displays the map with animals and handles exceptions
-    public static void getMap(List<Animal> animals)
+    public static void getMap(Zoo player,List<Animal> animals)
     {
         try
         {
@@ -65,14 +67,14 @@ class Map
         {
             Console.WriteLine(ErrorList.Error1()); // throw error if something is wrong format
             Console.ForegroundColor = ConsoleColor.Gray;
-            Program.Play(animals);
+            Program.Play(player, animals);
         }
         // Handle out of range exceptions
         catch (ArgumentOutOfRangeException)
         {
             Console.WriteLine(ErrorList.Error4()); //throw error if out of range exception on map locations
             Console.ForegroundColor = ConsoleColor.Gray;
-            Program.Play(animals); // go back to Main Menu
+            Program.Play(player, animals); // go back to Main Menu
         }
         // Handle other exceptions
         catch (Exception ex)
@@ -82,7 +84,7 @@ class Map
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.ForegroundColor = ConsoleColor.Gray;
-            Program.Play(animals);
+            Program.Play(player, animals);
         }
     }
 }

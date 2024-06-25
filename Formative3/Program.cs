@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 // Main program
 class Program
 { // ============================================= Main Method =============================================
@@ -43,7 +44,7 @@ class Program
     }
     // ============================================= Play Method =============================================
     //use another method to use the animals, to avoid recreating them over and over again.
-    public static void Play(List<Animal> animals)
+    public static void Play(Zoo player, List<Animal> animals)
     {
         Console.ForegroundColor = ConsoleColor.Gray;// Ensure Gray colour
         Console.WriteLine($"-<========>- Welcome to ~'s Virtual Zoo~! -<========>-");
@@ -67,7 +68,7 @@ class Program
         {
             Console.WriteLine(ErrorList.Error3());
             Console.ForegroundColor = ConsoleColor.Gray;
-            Play(animals);
+            Play(player, animals);
         } // --------------------------------------- Add new animal ---------------------------------------
         else if (choice == "1") // if choice is 1, give prompt for animal type to add
         {
@@ -85,56 +86,56 @@ class Program
             Console.ForegroundColor = ConsoleColor.Gray;
             if (choice_at_1 == "1")
             {
-                Add_animal(animals, "Lion"); // add animal type Lion
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Lion"); // add animal type Lion
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "2")
             {
-                Add_animal(animals, "Vulture"); // add animal type vulture
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Vulture"); // add animal type vulture
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "3")
             {
-                Add_animal(animals, "Zebra"); // add animal type zebra
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Zebra"); // add animal type zebra
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "4")
             {
-                Add_animal(animals, "Rhinoceros"); // add animal type rhinoceros
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Rhinoceros"); // add animal type rhinoceros
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "5")
             {
-                Add_animal(animals, "Cheetah"); // add animal type cheetah
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Cheetah"); // add animal type cheetah
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "6")
             {
-                Add_animal(animals, "Wolf"); // add animal type wolf
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Wolf"); // add animal type wolf
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "7")
             {
-                Add_animal(animals, "Baboon"); // add animal type baboon
-                Play(animals); // go back to play
+                Add_animal(player, animals, "Baboon"); // add animal type baboon
+                Play(player, animals); // go back to play
             }
             else if (choice_at_1 == "00")
             {
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
             else if (Check_Choice(choice_at_1) == false) // if the choice is not valid, throw an error
             {
                 ErrorList.Error6();
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
             else
             {
                 Console.WriteLine(ErrorList.Error6());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
-            Play(animals); // go back to play
+            Play(player, animals); // go back to play
         }// --------------------------------------- Remove animal ---------------------------------------
         else if (choice == "2")
         {
@@ -143,7 +144,7 @@ class Program
             {
                 Console.WriteLine(ErrorList.Error5());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
             else
             {
@@ -167,8 +168,8 @@ class Program
             Console.ForegroundColor = ConsoleColor.Blue;
             string animal_number = Console.ReadLine();
             Console.ForegroundColor = ConsoleColor.Gray;
-            Remove_animal(animals, animal_number);
-            Play(animals); // go back to play
+            Remove_animal(player, animals, animal_number);
+            Play(player, animals); // go back to play
         } // --------------------------------------- Use an animal ---------------------------------------
         else if (choice == "3")
         {
@@ -177,7 +178,7 @@ class Program
             {
                 Console.WriteLine(ErrorList.Error5());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
             else
             {
@@ -201,34 +202,34 @@ class Program
             Console.ForegroundColor = ConsoleColor.Blue;
             string animal_number = Console.ReadLine(); // enter animal index, if value integer is checked later
             Console.ForegroundColor = ConsoleColor.Gray;
-            use_animal(animals, animal_number);
-            Play(animals); // go back to play
+            use_animal(player, animals, animal_number);
+            Play(player, animals); // go back to play
         } // --------------------------------------- Display all animals ---------------------------------------
         else if (choice == "4")
         {
-            DisplayAnimals(animals);
-            Play(animals); // go back to play
+            DisplayAnimals(player, animals);
+            Play(player, animals); // go back to play
         }// --------------------------------------- Display Zoo Map ---------------------------------------
         else if (choice == "5")
         {
             // get Map of current animal positions
-            Map.getMap(animals);
-            Play(animals); // go back to play
+            Map.getMap(player, animals);
+            Play(player, animals); // go back to play
         }// --------------------------------------- Check Stats ---------------------------------------
         else if (choice == "6")
         {
             Mechanics.Check_Stats();
-            Play(animals);
+            Play(player, animals);
         }// --------------------------------------- Access Game Shop ---------------------------------------
         else if (choice == "7")
         {
             Shop.Access();
-            Play(animals);
+            Play(player, animals);
         }// --------------------------------------- Options ---------------------------------------
         else if (choice == "88")
         {
             Mechanics.Options();
-            Play(animals);
+            Play(player, animals);
         }
         // --------------------------------------- Quit program ---------------------------------------
         else if (choice == "99")
@@ -240,28 +241,28 @@ class Program
         {
             Console.WriteLine(ErrorList.Error2());
             Console.ForegroundColor = ConsoleColor.Gray;
-            Play(animals); // go back to play
+            Play(player, animals); // go back to play
         } // --------------------------------------- if input is not a valid option ---------------------------------------
         else if (Convert.ToInt32(choice) >= 5 && Convert.ToInt32(choice) < 99 || Convert.ToInt32(choice) > 99)
         {
             Console.WriteLine(ErrorList.Error6());
             Console.ForegroundColor = ConsoleColor.Gray;
-            Play(animals); // go back to play
+            Play(player, animals); // go back to play
         } // --------------------------------------- if user input wrong data type/left empty ---------------------------------------
         else
         {
             Console.WriteLine(ErrorList.Error1());
             Console.ForegroundColor = ConsoleColor.Gray;
-            Play(animals); // go back to play
+            Play(player, animals); // go back to play
         }
         // ============================================= Display all Animals =============================================
-        static void DisplayAnimals(List<Animal> animals)
+        static void DisplayAnimals(Zoo player,List<Animal> animals)
         {
             if (animals == null || animals.Count == 0)
             {
                 Console.WriteLine(ErrorList.Error5());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
             else
             {
@@ -300,7 +301,7 @@ class Program
             return result;
         }
         // ============================================= Use animal =============================================
-        static void use_animal(List<Animal> animals, string animal_num_str)
+        static void use_animal(Zoo player, List<Animal> animals, string animal_num_str)
         {
             try
             {   //choose animal from list
@@ -310,7 +311,7 @@ class Program
                 {
                     Console.WriteLine(ErrorList.Error4()); // if the animal is empty, throw error animal not found.
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals);
+                    Play(player, animals);
                 }
                 else
                 {
@@ -332,12 +333,12 @@ class Program
                         {
                             Console.WriteLine(ErrorList.Error7()); // if animal is too full to eat more
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                         else
                         {
                             current_animal.Eat();
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                     } // --------------------------------------- feeding animal by hand ---------------------------------------
                     else if (choice_at_2 == 2)
@@ -346,7 +347,7 @@ class Program
                         {
                             Console.WriteLine(ErrorList.Error7()); // if animal is too full to eat more
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                         else
                         {
@@ -362,28 +363,28 @@ class Program
                             if (food_num == 1)
                             {
                                 current_animal.Feed(); // call Feed method for animal
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else if (food_num == 2)
                             {
                                 current_animal.Feed("Grass"); // call overloaded Feed method for animal
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else if (food_num == 3)
                             {
                                 current_animal.Feed("Leaves"); // call overloaded Feed method for animal
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else if (food_num == 4)
                             {
                                 current_animal.Feed("Fruits"); // call overloaded Feed method for animal
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else
                             {
                                 Console.WriteLine(ErrorList.Error6());
                                 Console.ForegroundColor = ConsoleColor.Gray;
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                         }
                     } // --------------------------------------- Letting animal sleep ---------------------------------------
@@ -393,12 +394,12 @@ class Program
                         {
                             Console.WriteLine(ErrorList.Error8());
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                         else
                         {
                             current_animal.Sleep(); // call animal sleep method
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                     } // --------------------------------------- animal movement ---------------------------------------
                     else if (choice_at_2 == 4)
@@ -407,7 +408,7 @@ class Program
                         {
                             Console.WriteLine(ErrorList.Error9());
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                         else
                         {
@@ -429,35 +430,35 @@ class Program
                                 int y = rnd.Next(20); // creates a number between 0 and 19
                                 current_animal.setXCoordinate(x);
                                 current_animal.setYCoordinate(y);
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else if (move_choice == "2")
                             {
                                 current_animal.Fly();
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else if (move_choice == "3")
                             {
                                 current_animal.Climb();
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else if (move_choice == "4")
                             {
                                 current_animal.Swim();
-                                use_animal(animals, animal_num_str); // go back to use animal choices
+                                use_animal(player, animals, animal_num_str); // go back to use animal choices
                             }
                             else
                             {
                                 Console.WriteLine(ErrorList.Error1());
                                 Console.ForegroundColor = ConsoleColor.Gray;
                             }
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                     } // --------------------------------------- animal makes a sound ---------------------------------------
                     else if (choice_at_2 == 5)
                     {
                         current_animal.Speak();
-                        use_animal(animals, animal_num_str); // go back to use animal choices
+                        use_animal(player, animals, animal_num_str); // go back to use animal choices
                     } // --------------------------------------- Give animal bath ---------------------------------------
                     else if (choice_at_2 == 6)
                     {
@@ -465,29 +466,29 @@ class Program
                         {
                             Console.WriteLine(ErrorList.Error10());
                             Console.ForegroundColor = ConsoleColor.Gray;
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                         else
                         {
                             current_animal.Clean();
-                            use_animal(animals, animal_num_str); // go back to use animal choices
+                            use_animal(player, animals, animal_num_str); // go back to use animal choices
                         }
                     } // --------------------------------------- Go back to play ---------------------------------------
                     else if (choice_at_2 == 99)
                     {
-                        Play(animals);
+                        Play(player, animals);
                     } // --------------------------------------- if user input is wrong ---------------------------------------
                     else if (choice_at_2 >= 7 && choice_at_2 <= 98 || choice_at_2 >= 100)
                     {
                         Console.WriteLine(ErrorList.Error6());
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        use_animal(animals, animal_num_str); // go back to use animal choices
+                        use_animal(player, animals, animal_num_str); // go back to use animal choices
                     }
                     else
                     {
                         Console.WriteLine(ErrorList.Error6());
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        use_animal(animals, animal_num_str); // go back to use animal choices
+                        use_animal(player, animals, animal_num_str); // go back to use animal choices
                     }
                 }
             }
@@ -495,17 +496,17 @@ class Program
             {
                 Console.WriteLine(ErrorList.Error1()); // throw error if user enters wrong format
                 Console.ForegroundColor = ConsoleColor.Gray;
-                use_animal(animals, animal_num_str); // go back to use animal choices
+                use_animal(player, animals, animal_num_str); // go back to use animal choices
             }
             catch (ArgumentOutOfRangeException)
             {
                 Console.WriteLine(ErrorList.Error4()); //throw error if out of range exception
                 Console.ForegroundColor = ConsoleColor.Gray;
-                use_animal(animals, animal_num_str); // go back to use animal choices
+                use_animal(player, animals, animal_num_str); // go back to use animal choices
             }
         }
         // ============================================= Add more animals =============================================
-        static void Add_animal(List<Animal> animals, string animal_type)
+        static void Add_animal(Zoo player, List<Animal> animals, string animal_type)
         {
             try
             {
@@ -533,7 +534,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Lion {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else if (animal_type == "Vulture") // Adding a new Vulture animal
                 {
@@ -541,7 +542,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Vulture {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else if (animal_type == "Zebra") // Adding a new Zebra animal
                 {
@@ -549,7 +550,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Zebra {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else if (animal_type == "Rhinoceros") // Adding a new Rhinoceros animal
                 {
@@ -557,7 +558,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Rhinoceros {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else if (animal_type == "Cheetah") // Adding a new Cheetah animal
                 {
@@ -565,7 +566,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Cheetah {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else if (animal_type == "Wolf") // Adding a new Wolf animal
                 {
@@ -573,7 +574,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Wolf {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else if (animal_type == "Baboon") // Adding a new Baboon animal
                 {
@@ -581,23 +582,23 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"New Baboon {name} added Successfully!");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
             }
             catch (FormatException) // if user input in wrong format
             {
                 Console.WriteLine(ErrorList.Error2());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
             catch (Exception e) // catch outstanding errors (which there shouldn't be)
             {
                 Console.WriteLine($"{e.Message}");
-                Play(animals); // go back to play
+                Play(player, animals); // go back to play
             }
         }
         // ============================================= Remove an animal =============================================
-        static void Remove_animal(List<Animal> animals, string animal_num_str)
+        static void Remove_animal(Zoo player, List<Animal> animals, string animal_num_str)
         {
             try
             {   //choose animal from list
@@ -607,7 +608,7 @@ class Program
                 {
                     Console.WriteLine(ErrorList.Error4());
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Play(animals); // go back to play
+                    Play(player, animals); // go back to play
                 }
                 else
                 {
@@ -626,13 +627,13 @@ class Program
                     }
                     else if (choice_at_3 == 2) // user decides to give mercy to the poor animals soul
                     {
-                        Play(animals); // go back to play
+                        Play(player, animals); // go back to play
                     }
                     else
                     {
                         Console.WriteLine(ErrorList.Error6());
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        Remove_animal(animals, animal_num_str);
+                        Remove_animal(player, animals, animal_num_str);
                     }
                 }
             }
@@ -640,13 +641,13 @@ class Program
             {
                 Console.WriteLine(ErrorList.Error1());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals);
+                Play(player, animals);
             }
             catch (ArgumentOutOfRangeException) // if out of range exception happens
             {
                 Console.WriteLine(ErrorList.Error4());
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Play(animals);
+                Play(player, animals);
             }
         }
     }

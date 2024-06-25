@@ -9,6 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection.PortableExecutable;
 using Newtonsoft.Json.Linq;
 using System.Xml.Linq;
+using System.Numerics;
 
 class Extras
 {
@@ -79,7 +80,9 @@ class Mechanics
                     streamWriter.Write(Save_Info);
                 }
                 
-                Console.WriteLine($"JSON file created at: {Path.GetFullPath(filePath)}");
+                Console.WriteLine($"Save file created at: {Path.GetFullPath(filePath)}");
+
+                Program.Play(player, animals);
             }
             else if (sure_about_that.ToLower().Equals("n") || sure_about_that.ToLower().Equals("no"))
             {
@@ -91,8 +94,6 @@ class Mechanics
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Create_Save(animals);
             }
-
-            Program.Play(animals);
         } catch (FormatException e)
         {
             Console.WriteLine(ErrorList.Error2());
@@ -121,15 +122,11 @@ class Mechanics
             {
                 
                 var json = currentFile.ReadToEnd();
-                Console.WriteLine("passed readtoend");
-                Console.WriteLine("passed: " + json);
                 var player = JsonSerializer.Deserialize<Zoo>(json, new JsonSerializerOptions { IncludeFields = true })!;
-                Console.WriteLine("passed deserialize");
                 List<Animal> animals = player.Animals;
-                Console.WriteLine("passed animals list instantiation");
 
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Program.Play(animals);
+                Program.Play(player, animals);
             }
         }
         catch (FormatException e)
@@ -147,7 +144,7 @@ class Mechanics
         }
     }
 
-    public static void Load_Save(StreamWriter file)
+    public static void Save_Game(Zoo player, List<Animal> animals)
     {
         try
         {
