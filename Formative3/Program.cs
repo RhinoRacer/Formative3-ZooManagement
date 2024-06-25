@@ -2,6 +2,7 @@
 using System.ComponentModel.Design;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.Generic;
+using System.Diagnostics;
 // Main program
 class Program
 { // ============================================= Main Method =============================================
@@ -11,17 +12,26 @@ class Program
         List<Animal> animals = new List<Animal>();
         //Start Background Music
         Extras.Play_BG();
+        Console.ForegroundColor = ConsoleColor.Gray;
         Console.WriteLine("Welcome to Virtual Zoo Management!\n" +
             "1. Start new Game\n" +
-            "2. Load Save\n");
+            "2. Load Save\n" +
+            "00. Close Game");
+        Console.ForegroundColor = ConsoleColor.Blue;
         string choice = Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
         if (choice == "1")
         {
             Mechanics.Create_Save(animals);
         } 
         else if (choice == "2")
         {
-
+            Mechanics.Load_Save();
+        }
+        else if (choice == "00")
+        {
+            Extras.Stop_BG();
+            Environment.Exit(0);
         }
         else
         {
@@ -695,5 +705,11 @@ public class ErrorList()
     {
         Console.ForegroundColor = ConsoleColor.Red;
         return "ERROR 1010: Animal cannot be cleaned more, use other features for it to become dirty again.";
+    }
+
+    public static string Error11()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        return "ERROR 1111: No Save files to load from, please create a new save file.";
     }
 }

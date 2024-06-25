@@ -65,12 +65,17 @@ class Mechanics
 
                 string jsonString1 = JsonSerializer.Serialize(player, new JsonSerializerOptions { WriteIndented = true });
                 string jsonString2 = JsonSerializer.Serialize(animals, new JsonSerializerOptions { WriteIndented = true });
+                string Save_Info = jsonString1 + "\n" + jsonString2;
 
                 // Write the JSON string to a file
                 string filePath = $@"..\..\..\Save_Files\ZMS_{Name}_saveFile.json";
-               // StreamWriter streamWriter = File.WriteAllText(filePath, jsonString1);
-                //streamWriter = File.AppendText(jsonString2);
+                //StreamWriter streamWriter = File.CreateText(filePath);
 
+                using (StreamWriter streamWriter = new StreamWriter(filePath))
+                {
+                    streamWriter.Write(Save_Info);
+                }
+                
                 Console.WriteLine($"JSON file created at: {Path.GetFullPath(filePath)}");
             }
             else if (sure_about_that.ToLower().Equals("n") || sure_about_that.ToLower().Equals("no"))
@@ -79,7 +84,7 @@ class Mechanics
             }
             else
             {
-                Console.WriteLine(ErrorList.Error5());
+                Console.WriteLine(ErrorList.Error6());
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Create_Save(animals);
             }
@@ -91,13 +96,115 @@ class Mechanics
         } catch (Exception e)
         {
             Console.WriteLine(ErrorList.Error6());
+            Console.WriteLine(e.Message);
             Console.ForegroundColor= ConsoleColor.Gray;
             Create_Save(animals);
+        }
+    }
+    public static void Load_Save(string file_num_str, string[] files)
+    {
+        try
+        {
+            int file_num = Convert.ToInt32(file_num_str);
+            StreamReader currentFile = new StreamReader(files[file_num]); // get user chosen file
+            if (currentFile == null)
+            {
+                Console.WriteLine(ErrorList.Error4()); // if the file is empty, throw error file not found.
+                Console.ForegroundColor = ConsoleColor.Gray;
+
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(ErrorList.Error2());
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Load_Save();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(ErrorList.Error6());
+            Console.WriteLine(e.Message);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Load_Save();
+        }
+    }
+
+    public static void Load_Save(StreamWriter file)
+    {
+        try
+        {
+
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(ErrorList.Error2());
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Load_Save();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(ErrorList.Error6());
+            Console.WriteLine(e.Message);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Load_Save();
         }
     }
 
     public static void Load_Save()
     {
-
+        try
+        {
+            string strDocPath = $@"..\..\..\Save_Files\";
+            int docCount = Directory.GetFiles(strDocPath, "?.json",
+            SearchOption.TopDirectoryOnly).Length;
+            
+            if (docCount == null || docCount == 0) // incase Save_file list is empty
+            {
+                Console.WriteLine(ErrorList.Error11());
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Program.Main(null);
+            }
+            else
+            {
+                string[] files = Directory.GetFiles(strDocPath);
+                try
+                {
+                    int i = 0; // instantiate i
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    foreach (string save_f in files) // loop through files list
+                    {
+                        Console.WriteLine($"{i}: {save_f}\n"); // display each list
+                        i++;  // used for indexing and user choice
+                    }
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString()); // if something goes wrong (which there shouldn't) throw Exception message
+                }
+                Console.WriteLine("Select number: ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                string file_number = Console.ReadLine(); // enter animal index, if value integer is checked later
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Load_Save(file_number, files);
+            }
+        }
+        catch (FormatException e)
+        {
+            Console.WriteLine(ErrorList.Error2());
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Load_Save();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(ErrorList.Error6());
+            Console.WriteLine(e.Message);
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Load_Save();
+        }
     }
 }
