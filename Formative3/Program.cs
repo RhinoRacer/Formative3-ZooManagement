@@ -19,7 +19,7 @@ class Program
             "00. Close Game");
         Console.ForegroundColor = ConsoleColor.Blue;
         string choice = Console.ReadLine();
-        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.ForegroundColor = ConsoleColor.Gray;
         if (choice == "1")
         {
             Mechanics.Create_Save(animals);
@@ -40,8 +40,6 @@ class Program
             Main(args);
         }
         Console.ForegroundColor = ConsoleColor.Gray;
-        // Go to Main Menu
-        Play(animals);
     }
     // ============================================= Play Method =============================================
     //use another method to use the animals, to avoid recreating them over and over again.

@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Media;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection.PortableExecutable;
+using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 class Extras
 {
@@ -47,7 +51,9 @@ class Mechanics
             int HappinessLevel;
             //prompt user for Zoo Name
             Console.WriteLine("What will be the name of your Zoo?");
+            Console.ForegroundColor = ConsoleColor.Blue;
             string name = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine($"Are you sure you want your Zoo to be called {name}? (y/n)");
             string sure_about_that = Console.ReadLine();
             if (sure_about_that.ToLower().Equals("y") || sure_about_that.ToLower().Equals("yes") || sure_about_that.ToLower().Equals("ye"))
@@ -61,15 +67,12 @@ class Mechanics
                 customers = 0;
                 HappinessLevel = 0;
                 // create the player object/zoo object
-                Zoo player = new Zoo(Name, cash, bank, inventory, AttractionPoints, customers, HappinessLevel, storage);
+                Zoo player = new Zoo(Name, cash, bank, inventory, storage, AttractionPoints, customers, HappinessLevel, animals);
 
-                string jsonString1 = JsonSerializer.Serialize(player, new JsonSerializerOptions { WriteIndented = true });
-                string jsonString2 = JsonSerializer.Serialize(animals, new JsonSerializerOptions { WriteIndented = true });
-                string Save_Info = jsonString1 + "\n" + jsonString2;
+                string Save_Info = JsonSerializer.Serialize(player, new JsonSerializerOptions { WriteIndented = true });
 
                 // Write the JSON string to a file
                 string filePath = $@"..\..\..\Save_Files\ZMS_{Name}_saveFile.json";
-                //StreamWriter streamWriter = File.CreateText(filePath);
 
                 using (StreamWriter streamWriter = new StreamWriter(filePath))
                 {
@@ -88,6 +91,8 @@ class Mechanics
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Create_Save(animals);
             }
+
+            Program.Play(animals);
         } catch (FormatException e)
         {
             Console.WriteLine(ErrorList.Error2());
@@ -111,11 +116,20 @@ class Mechanics
             {
                 Console.WriteLine(ErrorList.Error4()); // if the file is empty, throw error file not found.
                 Console.ForegroundColor = ConsoleColor.Gray;
-
             }
             else
             {
-                throw new NotImplementedException();
+                
+                var json = currentFile.ReadToEnd();
+                Console.WriteLine("passed readtoend");
+                Console.WriteLine("passed: " + json);
+                var player = JsonSerializer.Deserialize<Zoo>(json, new JsonSerializerOptions { IncludeFields = true })!;
+                Console.WriteLine("passed deserialize");
+                List<Animal> animals = player.Animals;
+                Console.WriteLine("passed animals list instantiation");
+
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Program.Play(animals);
             }
         }
         catch (FormatException e)
@@ -159,7 +173,7 @@ class Mechanics
         try
         {
             string strDocPath = $@"..\..\..\Save_Files\";
-            int docCount = Directory.GetFiles(strDocPath, "?.json",
+            int docCount = Directory.GetFiles(strDocPath, "ZMS_*_saveFile.json",
             SearchOption.TopDirectoryOnly).Length;
             
             if (docCount == null || docCount == 0) // incase Save_file list is empty
@@ -171,6 +185,7 @@ class Mechanics
             else
             {
                 string[] files = Directory.GetFiles(strDocPath);
+                Console.WriteLine("Select the Number with the save file you want to load.");
                 try
                 {
                     int i = 0; // instantiate i
@@ -188,7 +203,7 @@ class Mechanics
                 }
                 Console.WriteLine("Select number: ");
                 Console.ForegroundColor = ConsoleColor.Blue;
-                string file_number = Console.ReadLine(); // enter animal index, if value integer is checked later
+                string file_number = Console.ReadLine(); // enter file index, if value integer is checked later
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Load_Save(file_number, files);
             }
