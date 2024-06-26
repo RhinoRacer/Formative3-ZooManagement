@@ -127,6 +127,7 @@ class Mechanics
                 List<Animal> animals = player.Animals;
 
                 Console.ForegroundColor = ConsoleColor.Gray;
+                currentFile.Close();
                 Program.Play(player, animals);
             }
         }

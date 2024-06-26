@@ -1,5 +1,5 @@
 {
-  "Name": "ZooTest8",
+  "Name": "TestZoo9",
   "Cash": 1000,
   "Bank": 0,
   "Inventory": [
@@ -79,8 +79,21 @@
         "Quantity": null
       },
       "AnimalPosition": {
-        "X": 13,
-        "Y": 7
+        "X": 11,
+        "Y": 3
+      }
+    },
+    {
+      "Diet": {
+        "FeedingSchedule": [
+          "Raw Steak",
+          "Raw Beef"
+        ],
+        "Quantity": null
+      },
+      "AnimalPosition": {
+        "X": 4,
+        "Y": 12
       }
     }
   ]

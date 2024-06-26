@@ -1,5 +1,5 @@
 {
-  "Name": "ZooTest8",
+  "Name": "ZooTest12",
   "Cash": 1000,
   "Bank": 0,
   "Inventory": [
@@ -71,6 +71,15 @@
   "HL": 0,
   "Animals": [
     {
+      "Name": "Simba",
+      "Age": 2,
+      "Hunger": 50,
+      "Health": 50,
+      "Cleanliness": 50,
+      "Fatigue": 50,
+      "Animal_Type": 0,
+      "Food_Type": 0,
+      "Habitat_Type": 4,
       "Diet": {
         "FeedingSchedule": [
           "Raw Steak",
@@ -79,8 +88,8 @@
         "Quantity": null
       },
       "AnimalPosition": {
-        "X": 13,
-        "Y": 7
+        "X": 18,
+        "Y": 12
       }
     }
   ]
