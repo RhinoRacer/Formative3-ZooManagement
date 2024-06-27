@@ -123,6 +123,7 @@ class Mechanics
             {
                 
                 var json = currentFile.ReadToEnd();
+                Console.WriteLine(json);
                 var player = JsonSerializer.Deserialize<Zoo>(json, new JsonSerializerOptions { IncludeFields = true })!;
                 List<Animal> animals = player.Animals;
 

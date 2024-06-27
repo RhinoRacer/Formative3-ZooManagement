@@ -103,7 +103,7 @@ public abstract class Animal : IComparable
     public Position AnimalPosition { get; set; } // add Position property
 
     [System.Text.Json.Serialization.JsonConstructor]
-    public Animal(string? Name, int Age, int Hunger, int Health, int Cleanliness, int Fatigue, int Animal_Type, int Food_Type, int Habitat_Type, Position AnimalPosition) // constructor
+    public Animal(string? Name, int Age, int Hunger, int Health, int Cleanliness, int Fatigue, int Animal_Type, int Food_Type, int Habitat_Type, DietInfo Diet, Position AnimalPosition) // constructor
     { // Constructor for base Animal class
         this.Name = Name;
         this.Age = Age;
@@ -112,6 +112,8 @@ public abstract class Animal : IComparable
         this.Cleanliness = Cleanliness;
         this.Fatigue = Fatigue;
         this.AnimalPosition = AnimalPosition;
+        // =-------------- Setting the instance diet ----------=
+        this.Diet = Diet;
         // =---------- AnimalType ----------=
         if (Animal_Type.Equals(0))
         {
@@ -175,8 +177,7 @@ public abstract class Animal : IComparable
         {
             this.Habitat_Type = HabitatType.not_specified;
         }
-        // =-------------- Setting the instance diet ----------=
-        setDiet();
+        
     }
 
     public Animal(string? Name, int Age, int Hunger, int Health, int Cleanliness, int Fatigue, string Animal_Type, string Food_Type, string Habitat_Type, int X, int Y) // constructor
