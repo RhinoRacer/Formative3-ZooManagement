@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -70,6 +71,14 @@ public class Position // class to get Animal position on map.
 // Formative 3 -- additions ===================================================
 
 // ============================================= Animal base class =============================================
+[JsonPolymorphic]
+[JsonDerivedType(typeof(Lion), "Lion")]
+[JsonDerivedType(typeof(Vulture), "Vulture")]
+[JsonDerivedType(typeof(Zebra), "Zebra")]
+[JsonDerivedType(typeof(Rhinoceros), "Rhinoceros")]
+[JsonDerivedType(typeof(Cheetah), "Cheetah")]
+[JsonDerivedType(typeof(Wolf), "Wolf")]
+[JsonDerivedType(typeof(Baboon), "Baboon")]
 public abstract class Animal : IComparable
 { // Creating base animal values
     public string? Name { get; set; }
@@ -93,8 +102,8 @@ public abstract class Animal : IComparable
     public DietInfo Diet { get; set; } // add DietInfo property
     public Position AnimalPosition { get; set; } // add Position property
 
-    [JsonConstructor]
-    public Animal(string? Name, int Age, int Hunger, int Health, int Cleanliness, int Fatigue, int Animal_Type, int Food_Type, int Habitat_Type, int X, int Y) // constructor
+    [System.Text.Json.Serialization.JsonConstructor]
+    public Animal(string? Name, int Age, int Hunger, int Health, int Cleanliness, int Fatigue, int Animal_Type, int Food_Type, int Habitat_Type, Position AnimalPosition) // constructor
     { // Constructor for base Animal class
         this.Name = Name;
         this.Age = Age;
@@ -102,7 +111,7 @@ public abstract class Animal : IComparable
         this.Health = Health;
         this.Cleanliness = Cleanliness;
         this.Fatigue = Fatigue;
-        AnimalPosition = new Position(X, Y);
+        this.AnimalPosition = AnimalPosition;
         // =---------- AnimalType ----------=
         if (Animal_Type.Equals(0))
         {
